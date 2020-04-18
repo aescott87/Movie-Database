@@ -15,8 +15,8 @@ class Home extends Component {
         this.props.dispatch({ type: 'GET_MOVIES' })
     }
 
-    handlePageChange = () => {
-        this.props.history.push('/details');
+    handleGoToDetails = (id) => {
+        this.props.history.push(`/details/${id}`);
     }
 
     render() {
@@ -29,7 +29,7 @@ class Home extends Component {
                         <li key={item.id}>
                             <h2>{item.title}</h2>
                             <img src={item.poster} alt={`Poster for ${item.title}`} 
-                            onClick={this.handlePageChange} />
+                            onClick={() => this.handleGoToDetails(item.id)} />
                             <p>{item.description}</p>
                         </li>
                     ))}
