@@ -8,8 +8,8 @@ class Edit extends Component {
 
     state = {
         id: this.props.match.params.id,
-        title: '',
-        description: ''
+        title: this.props.details.title,
+        description: this.props.details.description
     }
 
     componentDidMount() {
@@ -29,12 +29,15 @@ class Edit extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('in handleSubmit');
-        
         this.props.dispatch({type: 'EDIT_MOVIE', payload: this.state})
+        this.handleGoToDetails();
+    }
+
+    handleGoToDetails = (event) => {
+        this.props.history.push(`/details/${this.state.id}`);
     }
 
     render() {
-        
         return(
             <>
             <Header />
@@ -42,11 +45,11 @@ class Edit extends Component {
             <p><b>Current Description:</b> {this.props.details.description}</p>
             <form onSubmit={this.handleSubmit}>
             <label>Title:</label>
-            <input type="text" name="title" onChange={(event) => this.handleChangeFor('title', event)}/>
+            <input type="text" name="title" value={this.state.title} onChange={(event) => this.handleChangeFor('title', event)}/>
             <label>Description:</label>
-            <textarea rows="4" cols="100" onChange={(event) => this.handleChangeFor('description', event)}></textarea>
-            <button>Cancel</button>
-            <button type="submit">Update</button>
+            <textarea rows="4" cols="100" value={this.state.description} onChange={(event) => this.handleChangeFor('description', event)}></textarea>
+            <button onClick={this.handleGoToDetails}>Cancel</button>
+            <button type="submit">Save</button>
             </form>
             </>
         )
