@@ -1,45 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { HashRouter as Router, Route } from 'react-router-dom';
+//Import Components
+import Home from '../Home/Home';
+import Details from '../Details/Details';
+import Edit from '../Edit/Edit';
+import { withRouter } from 'react-router';
 
 class App extends Component {
-
-  componentDidMount() {
-    this.getMovies();
-  }
-
-  getMovies = () => {
-    this.props.dispatch({type: 'GET_MOVIES'})
-  }
 
   // Renders the entire app on the DOM
   render() {
     return (
       <div className="App">
-        <div className="app-header">
-          <header>
-            <h1>Movie Collection</h1>
-          </header>
-        </div>
-        <div className="movies-list">
-          <ul>
-            {this.props.movies.map (item => (
-              <li key={item.id}>
-                <h2>{item.title}</h2>
-                <img src={item.poster} alt={`Poster for ${item.title}`}/>
-                <p>{item.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Router>
+          <Route exact path='/' component={Home} />
+          <Route path='/details' component={Details} />
+          <Route path='/edit' component={Edit} />
+        </Router>
       </div>
     );
   }
 }
 
-const mapStateToProps = (reduxStore) => ({
-  movies: reduxStore.movies
-  
-})
-
-export default connect(mapStateToProps)(App);
+export default withRouter(connect()(App));
