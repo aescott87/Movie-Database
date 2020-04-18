@@ -29,15 +29,14 @@ class Details extends Component {
 
     render() {
         const id = this.props.match.params.id;
-
         return (
             <>
                 <Header />
                 <h2>
-                    {this.props.movies.title}
+                    {this.props.details.title}
                 </h2>
                 <p>
-                    {this.props.movies.description}
+                    {this.props.details.description}
                 </p>
                 <ul>
                     {this.props.genres.map((genre) => {
@@ -54,7 +53,7 @@ class Details extends Component {
 }
 
 const mapStateToProps = (reduxStore) => ({
-    movies: reduxStore.movies,
+    details: reduxStore.details,
     genres: reduxStore.genres
 })
 

@@ -16,8 +16,9 @@ import { takeEvery, put } from 'redux-saga/effects';
 // Create the rootSaga generator function
 function* rootSaga() {
 yield takeEvery('GET_MOVIES', getMoviesSaga);
-yield takeEvery('GET_DETAILS', getDetailsSaga)
-yield takeEvery('GET_GENRES', getGenreSaga)
+yield takeEvery('GET_DETAILS', getDetailsSaga);
+yield takeEvery('GET_GENRES', getGenreSaga);
+yield takeEvery('EDIT_MOVIE', updateMovieSaga);
 }
 
 function* getMoviesSaga(event) {
@@ -35,7 +36,7 @@ function* getDetailsSaga(event) {
     console.log('in get details saga', event);
     try {
     const response = yield axios.get(`/movies/${event.payload.movie_id}`);
-    yield put ({type: 'SET_MOVIES', payload: response.data});
+    yield put ({type: 'SET_DETAILS', payload: response.data});
     }
     catch (error) {
         console.log('Error getting movie details', error);
@@ -53,6 +54,17 @@ function* getGenreSaga(event) {
     }
 }
 
+function* updateMovieSaga(event) {
+    console.log('in update movie saga', event);
+    try {
+    const response = yield axios.put(`/movies/${event.payload.id}`, event.payload);
+    yield put ({type: 'SET_DETAILS', payload: response.data});
+    }
+    catch (error) {
+        console.log('Error getting genres', error);
+    }
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -60,6 +72,15 @@ const sagaMiddleware = createSagaMiddleware();
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+const details = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_DETAILS':
             return action.payload;
         default:
             return state;
@@ -80,6 +101,7 @@ const genres = (state = [], action) => {
 const storeInstance = createStore(
     combineReducers({
         movies,
+        details,
         genres,
     }),
     // Add sagaMiddleware to our store
