@@ -3,7 +3,24 @@ import '../App/App.css';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Header from '../Header/Header';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
+const styles = theme => ({
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        display: 'none',
+    },
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    },
+});
 
 class Details extends Component {
 
@@ -36,24 +53,29 @@ class Details extends Component {
     render() {
         //Set variable for ID param
         const id = this.props.match.params.id;
+        const { classes } = this.props;
         return (
             <>
                 <Header />
-                <h2>
-                    {this.props.details.title}
-                </h2>
-                <p>
-                    {this.props.details.description}
-                </p>
-                <ul>
-                    {this.props.genres.map((genre) => {
-                        return (
-                            <li key={genre.id}>{genre.name}</li>
-                        )
-                    })}
-                </ul>
-                <button onClick={this.handleGoHome}>Back</button>
-                <button onClick={() => this.handleGoToEdit(id)}>Edit</button>
+                <div>
+                    <Paper className={classes.root} elevation={1}>
+                        <Typography variant="h5" component="h3">
+                            {this.props.details.title}
+                        </Typography>
+                        <Typography component="p">
+                            {this.props.details.description}
+                        </Typography>
+                        <Typography component="ul">
+                            {this.props.genres.map((genre) => {
+                                return (
+                                    <li key={genre.id}>{genre.name}</li>
+                                )
+                            })}
+                        </Typography>
+                    </Paper>
+                </div>
+                <Button variant="contained" className={classes.button} onClick={this.handleGoHome}>Back</Button>
+                <Button variant="contained" color="secondary" className={classes.button} onClick={() => this.handleGoToEdit(id)}>Edit</Button>
             </>
         )
     }
@@ -65,4 +87,4 @@ const mapStateToProps = (reduxStore) => ({
     genres: reduxStore.genres
 })
 
-export default withRouter(connect(mapStateToProps)(Details));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Details)));
