@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import '../App/App.css';
-
 import { connect } from 'react-redux';
 //Import Components
 import Header from '../Header/Header';
 import { withRouter } from 'react-router';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+
+const styles = {
+    card: {
+        display: "block",
+        maxWidth: 345,
+    },
+    media: {
+        height: 500,
+    },
+};
 
 class Home extends Component {
 
@@ -24,22 +39,35 @@ class Home extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <>
                 <Header />
                 <h2>Want to know more? Click the poster for details.</h2>
-                <ul>
+                <div className="grid-container">
                     {this.props.movies.map((item) => {
                         return (
-                            <li key={item.id}>
-                                <h2>{item.title}</h2>
-                                <img src={item.poster} alt={`Poster for ${item.title}`}
-                                    onClick={() => this.handleGoToDetails(item.id)} />
-                                <p>{item.description}</p>
-                            </li>
+                            <Card key={item.id} className={classes.card}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={() => this.handleGoToDetails(item.id)}
+                                        className={classes.media}
+                                        image={item.poster}
+                                        title={`Poster for ${item.title}`}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {item.title}
+                                        </Typography>
+                                        <Typography component="p">
+                                            {item.description}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
                         )
                     })}
-                </ul>
+                </div>
             </>
         )
     }
@@ -50,4 +78,4 @@ const mapStateToProps = (reduxStore) => ({
     movies: reduxStore.movies
 })
 
-export default withRouter(connect(mapStateToProps)(Home));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Home)));

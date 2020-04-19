@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Header from '../Header/Header';
 
+
 class Details extends Component {
 
     //GET movie details and genres on page load

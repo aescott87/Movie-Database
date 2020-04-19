@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../App/App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Header from '../Header/Header';

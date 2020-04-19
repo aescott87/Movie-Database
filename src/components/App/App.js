@@ -7,12 +7,15 @@ import Home from '../Home/Home';
 import Details from '../Details/Details';
 import Edit from '../Edit/Edit';
 import { withRouter } from 'react-router';
+import { CssBaseline } from '@material-ui/core';
 
 class App extends Component {
 
   // Renders the entire app on the DOM
   render() {
     return (
+      <React.Fragment>
+        <CssBaseline />
       <div className="App">
         <Router>
           <Route exact path='/' component={Home} />
@@ -20,6 +23,7 @@ class App extends Component {
           <Route path='/edit/:id' component={Edit} />
         </Router>
       </div>
+      </React.Fragment>
     );
   }
 }
