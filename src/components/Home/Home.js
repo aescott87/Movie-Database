@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App/App.css';
+
 import { connect } from 'react-redux';
 //Import Components
 import Header from '../Header/Header';
@@ -7,14 +8,17 @@ import { withRouter } from 'react-router';
 
 class Home extends Component {
 
+    //GET all movies on page load
     componentDidMount() {
         this.getMovies();
     }
 
+    //Dispatch GET request to Saga
     getMovies = () => {
         this.props.dispatch({ type: 'GET_MOVIES' })
     }
 
+    //Takes user to the details page for selected movie
     handleGoToDetails = (id) => {
         this.props.history.push(`/details/${id}`);
     }
@@ -41,9 +45,9 @@ class Home extends Component {
     }
 }
 
+//Connect to movies Reducer
 const mapStateToProps = (reduxStore) => ({
     movies: reduxStore.movies
-
 })
 
 export default withRouter(connect(mapStateToProps)(Home));

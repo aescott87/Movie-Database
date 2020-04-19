@@ -6,26 +6,31 @@ import Header from '../Header/Header';
 
 class Edit extends Component {
 
+    //Set local state for movie ID, title, and description
     state = {
         id: this.props.match.params.id,
         title: this.props.details.title,
         description: this.props.details.description
     }
 
+    //Load movie details on page load
     componentDidMount() {
         this.getDetails();
     }
 
+    //Dispatch GET movie details to Saga
     getDetails = () => {
         this.props.dispatch({ type: 'GET_DETAILS', payload: { movie_id: this.props.match.params.id } })
     }
 
+    //Handle state change for title/description
     handleChangeFor = (propertyName, event) => {
         this.setState({
                 [propertyName]: event.target.value
         })
     }
 
+    //Dispatch PUT Saga to update movie details
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('in handleSubmit');
@@ -33,6 +38,7 @@ class Edit extends Component {
         this.handleGoToDetails();
     }
 
+    //Takes user back to Details page
     handleGoToDetails = (event) => {
         this.props.history.push(`/details/${this.state.id}`);
     }
@@ -56,6 +62,7 @@ class Edit extends Component {
     }
 }
 
+//Access to details Reducer
 const mapStateToProps = (reduxStore) => ({
     details: reduxStore.details,
 })

@@ -21,6 +21,7 @@ yield takeEvery('GET_GENRES', getGenreSaga);
 yield takeEvery('EDIT_MOVIE', updateMovieSaga);
 }
 
+//Saga for GET all movies request
 function* getMoviesSaga(event) {
     console.log('in get movies saga');
     try {
@@ -32,6 +33,7 @@ function* getMoviesSaga(event) {
     }
 }
 
+//Saga for GET movie details request
 function* getDetailsSaga(event) {
     console.log('in get details saga', event);
     try {
@@ -43,6 +45,7 @@ function* getDetailsSaga(event) {
     } 
 }
 
+//Saga for GET request for specific movie's genres
 function* getGenreSaga(event) {
     console.log('in get genres saga', event);
     try {
@@ -54,6 +57,7 @@ function* getGenreSaga(event) {
     }
 }
 
+//Saga for PUT request to update title and description
 function* updateMovieSaga(event) {
     console.log('in update movie saga', event);
     try {
@@ -78,6 +82,7 @@ const movies = (state = [], action) => {
     }
 }
 
+//Used to store title and description of specifc movie
 const details = (state = [], action) => {
     switch(action.type) {
         case 'SET_DETAILS':
